@@ -8,13 +8,14 @@ chrome.omnibox.onInputEntered.addListener(function(text) {
   navigate(reqUrl);
 });
 
+// We use this to generate our comma-separated tag string
 function buildTagString(tags) {
   tagString = "tags=";
   parts = tags.split(',');
   for(var i = 0; i < parts.length; i++) {
     tagString += encodeURIComponent(parts[i]) + ",";
   }
-  tagString = tagString.substring(0, reqUrl.length - 1);
+  tagString = tagString.substring(0, tagString.length - 1);
   return tagString;
 }
 

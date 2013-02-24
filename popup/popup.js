@@ -1,21 +1,21 @@
-var HOST_BASE = "http://mylittlefacewhen.com";
-var API_BASE = "/api/v3/";
+var HOST_BASE = "http://mylittlefacewhen.com/";
+var API_BASE = "api/v3/";
 
 function main() {
-  $('#search-bar').keyup(function(event) {
-    tagString = chrome.extension.getBackgroundPage().generateTagString($('#search-bar').val());
-    $('#empty-text-inner').text(tagString);
+  $('#quilt').isotope({
+    itemSelector: '.item'
   });
-}
-
-function buildTagString(tags) {
-  tagString = "tags=";
-  parts = tags.split(',');
-  for(var i = 0; i < parts.length; i++) {
-    tagString += encodeURIComponent(parts[i]) + ",";
-  }
-  tagString = tagString.substring(0, reqUrl.length - 1);
-  return tagString;
+  $('#search-bar').keyup(function(event) {
+    input = $('#search-bar').val();
+    code = event.keyCode || event.which;
+    if(code == 13) {
+      if(input.length > 0) {
+        alert('Trigger search');
+      } else {
+        alert('Reset to default');
+      }
+    }
+  });
 }
 
 function navigateToFace(id) {
@@ -49,6 +49,7 @@ function requestImages(url, args, json) {
     reqUrl = reqUrl + args[i] + "&";
   }
   reqUrl += "format=json";
+  console.log('Url: ' + reqUrl + '\nArgs: ' + args + '\nJSON: ' + json);
   $.ajax({
     url: reqUrl,
     contentType: 'application/json',

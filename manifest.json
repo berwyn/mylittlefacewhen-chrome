@@ -22,7 +22,7 @@
   },
 
   "background": {
-    persistent: false,
+    "persistent": false,
     "scripts": [
       "js/background.js"
     ]

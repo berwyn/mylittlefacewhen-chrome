@@ -12,20 +12,21 @@
   <script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/jquery.isotope.min.js"></script>
+  <script type="text/javascript" src="/js/background.js"></script>
   <script type="text/javascript" src="/popup/popup.js"></script>
 </head>
 <body>
   <div class="container" id="root">
     <div class="row-fluid">
       <div class="span10">
-        <form class="form-inline">
-          <input id="search-bar" type="text" class="input-block-level" placeholder="Search MLFW">
-        </form>
+        <input id="search-bar" type="text" class="input-block-level" placeholder="Search MLFW">
       </div>
     </div>
     <h5>Results</ht>
-    <div id="quilt" class="isotope">
+    <div class="container">
       <p class="muted" id="empty-text"><small id="empty-text-inner">No results</small></p>
+      <div id="quilt">
+      </div>
     </div>
   </div>
 </body>
