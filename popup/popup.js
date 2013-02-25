@@ -1,22 +1,28 @@
 // Some constants
 var HOST_BASE = "http://mylittlefacewhen.com/";
 var API_BASE = "api/v3/";
+var API_URL = HOST_BASE + API_BASE;
 var RANDOM_LIMIT = 580;
+var client = new $.RestClient(API_URL);
+
+/**
+ * Bootstrap the browser action when the DOM is ready
+ */
+$(function() {  
+  main();
+});
 
 /** 
  * Base function to bootstrap the browser action
  */
 function main() {
   // Generate our REST client
-  var client = $.RestClient(HOST_BASE + API_BASE);
   client.add('face', {stringifyData: true});
 
   // Inialize the mosaic quilt
-  $('#quilt').isotope({
+  $('#quilt').mosaicflow({
     itemSelector: '.item',
-    masonryHorizontal: {
-      rowHeight: 200
-    }
+    minItemWidth: 150
   });
 
   // Hide inital elements
@@ -109,10 +115,3 @@ function displayImages(data) {
     }
   }
 }
-
-/**
- * Bootstrap the browser action when the DOM is ready
- */
-$(function() {
-  main();
-});
