@@ -64,6 +64,12 @@ function getPonies(input) {
   }
 }
 
+/**
+ * Generic method to make a git request to /faces/
+ * This should be modified when/if more resources are supported
+ *
+ * @param {String} data - The URL parameters to add to the request
+ */
 function makeRequest(data) {
   console.log('Making request with data: ' + data);
   $.ajax({
@@ -109,7 +115,7 @@ function displayImages(data) {
       face = data.objects[i];
 
       element = $('<img class="item"/>')
-        .attr('src', HOST_BASE + face.thumbnails.jpg);
+        .attr('src', HOST_BASE + face.image);
 
       relRatio = face.width / face.height;
       if(relRatio >= 1.3) {

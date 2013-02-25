@@ -1,13 +1,21 @@
 // Copyright (c) 2013 Berwyn Codeweaver. All rights reserved.
 
-// Event fired when the user accepts the input in the omnibox
+/**
+ * This is the event fired when a user presses 'enter' while in the MLFW
+ * search view. Only applies to the Omnibox
+ */
 chrome.omnibox.onInputEntered.addListener(function(text) {
   reqUrl = "http://mylittlefacewhen.com/search/?"
   reqUrl += buildTagString(text);
   navigate(reqUrl);
 });
 
-// We use this to generate our comma-separated tag string
+/**
+ * Build a requst string for normal MLFW navigation
+ *
+ * @param {String} tags - The raw string of comma-separated tags
+ * @returns {String} A URL query string
+ */
 function buildTagString(tags) {
   tagString = "tags=";
   parts = tags.split(',');
@@ -18,6 +26,12 @@ function buildTagString(tags) {
   return tagString;
 }
 
+/**
+ * Build an API query string from a given plain object
+ *
+ * @param {PlainObject} object - The object containing the query parameters
+ * @returns {String} An API query string
+ */
 function buildApiString(object) {
   apiString = '';
   for(var key in object) {
@@ -35,7 +49,13 @@ function buildApiString(object) {
   return apiString.substring(0, apiString.length - 1);
 }
 
-// Function to navigate to a given url
+/**
+ * Given a url, this will navigate there. If the current tab
+ * is on the New Tab page, this tab will be consumed. Otherwise,
+ * a new tab is spawned to handle the navigation.
+ *
+ * @param {String} url - The fully qualified URL to navigate to
+ */
 function navigate(url) {
   chrome.tabs.getSelected(null, function(tab) {
     if(tab.url === "chrome://newtab/") {
