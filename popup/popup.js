@@ -3,42 +3,93 @@ var HOST_BASE = "http://mylittlefacewhen.com/";
 var API_BASE = "api/v3/";
 var RANDOM_LIMIT = 580;
 
-// Our base function
+/** 
+ * Base function to bootstrap the browser action
+ */
 function main() {
+  // Generate our REST client
+  var client = $.RestClient(HOST_BASE + API_BASE);
+  client.add('face', {stringifyData: true});
+
+  // Inialize the mosaic quilt
   $('#quilt').isotope({
-    itemSelector: '.item'
+    itemSelector: '.item',
+    masonryHorizontal: {
+      rowHeight: 200
+    }
   });
+
+  // Hide inital elements
   $('#quilt').hide();
   $('#empty-text').hide();
-  getRandomImages();
+  
+  // PONIZ
+  getPonies();
+  
+  // Setup the search bar
   $('#search-bar').keyup(function(event) {
     input = $('#search-bar').val();
     code = event.keyCode || event.which;
     if(code == 13) {
       if(input.length > 0) {
-        $('#quilt').children.each(function(index, element) {
-          $('#quilt').isotope('remove', element, function(){});
-        });
+        clearQuilt();
+        getPonies(input);
       } else {
-        getRandomImages();
+        getPonies();
       }
     }
   });
 }
 
-// Fetch some random faces from the API
-function getRandomImages() {
-  beginIndex = Math.floor(Math.random() * RANDOM_LIMIT);
-  requestImages('face/', null, { order_by: "random", id_gte: beginIndex });
+/**
+ * Get faces from the API, and put them in the mosaic
+ *
+ * @param {String} input - The input the user made
+ */
+function getPonies(input) {
+  if(input !== undefined) {
+    client.face.read({
+      tags_any: input.split(',')
+    }).done(displayImages);
+  } else {
+    beginIndex = Math.floor(Math.random() * RANDOM_LIMIT);
+    client.face.read({
+      order_by: 'random',
+      id_gte: beginIndex
+    }).done(displayImages);
+  }
 }
 
-// Navigate to a given face on MLFW
+/**
+ * Clear the image mosaic so we can put new items in
+ */
+function clearQuilt() {
+  $('#quilt').children().each(function(index, Element) {
+    Element.remove();
+    $('#quilt').isotope('remove', element, function() {
+      // We don't care so much about this part
+    });
+  });
+}
+
+/**
+ * Navigate to a given face on MLFW
+ *
+ * @param {String} id - The ID of the face we want to head to
+ */
 function navigateToFace(id) {
-  alert(id);
+  // TODO Make the navigation logic, callback to function in background.js
 }
 
-// Take the JSON body and render the images in it
-function displayImages(json) {
+/**
+ * Take the JSON response from the API and display the images it returned
+ *
+ * @param data
+ */
+function displayImages(data) {
+  // for now, figure out what data we're being given
+  console.log(data);
+  return;
   if(json.objects.length <= 0) {
     $('#quilt');
     $('#empty-text').show();
@@ -48,42 +99,20 @@ function displayImages(json) {
     for(var i = 0; i < json.objects.length; i++) {
       element = $('<img class="item"/>')
         .attr('src', HOST_BASE + json.objects[i].image);
+      relRatio = element.width() / element.height();
+      if(relRatio >= 1.3) {
+        element.addClass('item-wide');
+      } else if (relRatio <= .7) {
+        element.addClass('item-tall');
+      }
       $('#quilt').isotope('insert', element);
     }
   }
 }
 
-// Log request errors to the console
-function displayError(jqXHR, textStatus, errorThrown) {
-  console.error('Error occured: ' + errorThrown);
-}
-
-// Make an API request for faces
-function requestImages(url, args, json) {
-  args = args || [];
-  json = JSON.stringify(json);
-  reqUrl = HOST_BASE + API_BASE + url + "?";
-  for(var i = 0; i < args.length; i++) {
-    reqUrl = reqUrl + args[i] + "&";
-  }
-  reqUrl += "format=json";
-  // console.log('Url: ' + reqUrl + '\nArgs: ' + args + '\nJSON: ' + json);
-  ajaxArgs = {
-    url: reqUrl,
-    contentType: 'application/json',
-    dataType: 'json',
-    success: displayImages,
-    error: displayError,
-    type: 'GET',
-    processData: false
-  };
-  if(json !== undefined) {
-    ajaxArgs.data = json;
-  }
-  $.ajax(ajaxArgs);
-}
-
-// When the DOM is ready, run main
+/**
+ * Bootstrap the browser action when the DOM is ready
+ */
 $(function() {
   main();
 });

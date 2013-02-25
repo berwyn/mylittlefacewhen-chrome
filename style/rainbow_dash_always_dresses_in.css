@@ -1,25 +1,3 @@
-#root {
-  width: 600px;
-  min-height: 50px;
-  max-height: 600px;
-  padding-top: 10px;
-}
-
-.item {
-  max-width: 150;
-  max-height: 150;
-  margin: 10px;
-  float: center;
-}
-
-.item-tall {
-  max-height: 300;
-}
-
-.item-wide {
-  max-width: 300;
-}
-
 /**** Isotope Filtering ****/
 
 .isotope-item {
@@ -68,4 +46,28 @@
       -ms-transition-duration: 0s;
        -o-transition-duration: 0s;
           transition-duration: 0s;
+}
+
+#root {
+  width: 420px;
+  min-height: 50px;
+  max-height: 600px;
+  padding-top: 10px;
+}
+
+.item {
+  max-width: 200px;
+  max-height: 200px;
+  margin: 5px;
+  float: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.variable-sizes .item-tall {
+  max-height: 400px;
+}
+
+.variable-sizes .item-wide {
+  max-width: 400px;
 }
