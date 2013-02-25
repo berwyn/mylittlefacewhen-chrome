@@ -4,7 +4,6 @@
 chrome.omnibox.onInputEntered.addListener(function(text) {
   reqUrl = "http://mylittlefacewhen.com/search/?"
   reqUrl += buildTagString(text);
-  console.log('inputEntered: ' + reqUrl);
   navigate(reqUrl);
 });
 
@@ -14,6 +13,16 @@ function buildTagString(tags) {
   parts = tags.split(',');
   for(var i = 0; i < parts.length; i++) {
     tagString += encodeURIComponent(parts[i]) + ",";
+  }
+  tagString = tagString.substring(0, tagString.length - 1);
+  return tagString;
+}
+
+function buildApiTagString(input) {
+  tagString = '?tags_any=';
+  parts = input.split(',');
+  for(var i = 0; i < parts.length; i++) {
+    tagString += encodeURIComponent(parts[i]) + ',';
   }
   tagString = tagString.substring(0, tagString.length - 1);
   return tagString;

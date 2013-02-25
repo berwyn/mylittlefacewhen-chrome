@@ -3,7 +3,9 @@ var HOST_BASE = "http://mylittlefacewhen.com/";
 var API_BASE = "api/v3/";
 var API_URL = HOST_BASE + API_BASE;
 var RANDOM_LIMIT = 580;
-var client = new $.RestClient(API_URL);
+var client = new $.RestClient(API_URL, {
+  cache: 0 // Force lack of cache, because we're only interacting with one endpoint
+});
 
 /**
  * Bootstrap the browser action when the DOM is ready
@@ -26,7 +28,6 @@ function main() {
   });
 
   // Hide inital elements
-  $('#quilt').hide();
   $('#empty-text').hide();
   
   // PONIZ
@@ -54,16 +55,24 @@ function main() {
  */
 function getPonies(input) {
   if(input !== undefined) {
-    client.face.read({
-      tags_any: input.split(',')
-    }).done(displayImages);
+    makeRequest({tag__any: input.split(',')});
   } else {
     beginIndex = Math.floor(Math.random() * RANDOM_LIMIT);
-    client.face.read({
-      order_by: 'random',
-      id_gte: beginIndex
-    }).done(displayImages);
+    makeRequest({order_by: 'random',id__gte: beginIndex});
   }
+}
+
+function makeRequest(data) {
+  console.log('Making request with data: ' + JSON.stringify(data));
+  $.ajax({
+    accepts: 'application/json',
+    contentType: 'application/json',
+    data: JSON.stringify(data),
+    success: displayImages,
+    processData: false,
+    type: 'GET',
+    url: API_URL + 'face/'
+  });
 }
 
 /**
@@ -72,9 +81,6 @@ function getPonies(input) {
 function clearQuilt() {
   $('#quilt').children().each(function(index, Element) {
     Element.remove();
-    $('#quilt').isotope('remove', element, function() {
-      // We don't care so much about this part
-    });
   });
 }
 
@@ -93,25 +99,25 @@ function navigateToFace(id) {
  * @param data
  */
 function displayImages(data) {
-  // for now, figure out what data we're being given
-  console.log(data);
-  return;
-  if(json.objects.length <= 0) {
-    $('#quilt');
+  clearQuilt();
+  if(data.objects.length <= 0) {
     $('#empty-text').show();
   } else {
     $('#empty-text').hide();
-    $('#quilt').show();
-    for(var i = 0; i < json.objects.length; i++) {
+    for(var i = 0; i < data.objects.length; i++) {
+      face = data.objects[i];
+
       element = $('<img class="item"/>')
-        .attr('src', HOST_BASE + json.objects[i].image);
-      relRatio = element.width() / element.height();
+        .attr('src', HOST_BASE + face.thumbnails.jpg);
+
+      relRatio = face.width / face.height;
       if(relRatio >= 1.3) {
         element.addClass('item-wide');
       } else if (relRatio <= .7) {
         element.addClass('item-tall');
       }
-      $('#quilt').isotope('insert', element);
+
+      $('#quilt').append(element);
     }
   }
 }

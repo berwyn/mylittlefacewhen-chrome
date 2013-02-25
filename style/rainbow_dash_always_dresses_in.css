@@ -1,25 +1,22 @@
 #root {
-  width: 420px;
+  width: 600px;
   min-height: 50px;
   max-height: 600px;
   padding-top: 10px;
 }
 
 .item {
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 140px;
+  max-height: 140px;
   margin: 5px;
-  float: left;
-  position: relative;
-  overflow: hidden;
 }
 
-.variable-sizes .item-tall {
-  max-height: 400px;
+.item-tall {
+  max-height: 390px;
 }
 
-.variable-sizes .item-wide {
-  max-width: 400px;
+.item-wide {
+  max-width: 390px;
 }
 
 .mosaicflow__column {
