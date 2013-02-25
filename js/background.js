@@ -22,6 +22,13 @@ function buildTagString(tags) {
 // Function to navigate to a given url
 function navigate(url) {
   chrome.tabs.getSelected(null, function(tab) {
-    chrome.tabs.update(tab.id, {url: url});
+    if(tab.url === "chrome://newtab/") {
+      chrome.tabs.update(tab.id, {url: url});
+    } else {
+      chrome.tabs.create({
+        url: url,
+        active: true
+      });
+    }
   });
 }

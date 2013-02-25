@@ -6,18 +6,18 @@
 }
 
 .item {
-  width: 150;
-  height: 150;
+  max-width: 150;
+  max-height: 150;
   margin: 10px;
   float: center;
 }
 
 .item-tall {
-  height: 300;
+  max-height: 300;
 }
 
 .item-wide {
-  width: 300;
+  max-width: 300;
 }
 
 /**** Isotope Filtering ****/
