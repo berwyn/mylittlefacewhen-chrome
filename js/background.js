@@ -18,14 +18,21 @@ function buildTagString(tags) {
   return tagString;
 }
 
-function buildApiTagString(input) {
-  tagString = '?tags_any=';
-  parts = input.split(',');
-  for(var i = 0; i < parts.length; i++) {
-    tagString += encodeURIComponent(parts[i]) + ',';
+function buildApiString(object) {
+  apiString = '';
+  for(var key in object) {
+    if(key === 'tags' ) {
+      apiString += "tags__all=";
+      for(var index in object[key]) {
+        console.log(object[key][index]);
+        apiString += (encodeURIComponent(object[key][index]) + ',');
+      }
+      apiString = apiString.substring(0, apiString.length - 1);
+    } else {
+      apiString += key + '=' + object[key] + '&';
+    }
   }
-  tagString = tagString.substring(0, tagString.length - 1);
-  return tagString;
+  return apiString.substring(0, apiString.length - 1);
 }
 
 // Function to navigate to a given url

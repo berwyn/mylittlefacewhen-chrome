@@ -55,19 +55,20 @@ function main() {
  */
 function getPonies(input) {
   if(input !== undefined) {
-    makeRequest({tag__any: input.split(',')});
+    apiString = buildApiString({tags: input.split(',')});
+    makeRequest(apiString);
   } else {
     beginIndex = Math.floor(Math.random() * RANDOM_LIMIT);
-    makeRequest({order_by: 'random',id__gte: beginIndex});
+    apiString = buildApiString({order_by: 'random', id__gte: beginIndex});
+    makeRequest(apiString);
   }
 }
 
 function makeRequest(data) {
-  console.log('Making request with data: ' + JSON.stringify(data));
+  console.log('Making request with data: ' + data);
   $.ajax({
-    accepts: 'application/json',
     contentType: 'application/json',
-    data: JSON.stringify(data),
+    data: data,
     success: displayImages,
     processData: false,
     type: 'GET',
