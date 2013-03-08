@@ -3,14 +3,30 @@ var HOST_BASE = "http://mylittlefacewhen.com/";
 var API_BASE = "api/v3/";
 var API_URL = HOST_BASE + API_BASE;
 var RANDOM_LIMIT = 580;
-var client = new $.RestClient(API_URL, {
-  cache: 0 // Force lack of cache, because we're only interacting with one endpoint
-});
+var spinner;
+var target;
+
 
 /**
  * Bootstrap the browser action when the DOM is ready
  */
 $(function() {  
+  var opts = {
+    lines: 13,
+    length: 0,
+    width: 2,
+    radius: 5,
+    corners: 0,
+    rotate: 0,
+    trail: 60,
+    speed: 1.0,
+    hwaccel: true,
+    className: 'spinner',
+    top: 'auto',
+    left: 'auto'
+  };
+  spinner = new Spinner(opts);
+  target = $('#results-label');
   main();
 });
 
@@ -18,8 +34,8 @@ $(function() {
  * Base function to bootstrap the browser action
  */
 function main() {
-  // Generate our REST client
-  client.add('face', {stringifyData: true});
+
+  
 
   // Inialize the mosaic quilt
   $('#quilt').mosaicflow({
@@ -28,10 +44,8 @@ function main() {
   });
 
   // Hide inital elements
+  $('#results-label').hide();
   $('#empty-text').hide();
-  
-  // PONIZ
-  getPonies();
   
   // Setup the search bar
   $('#search-bar').keyup(function(event) {
@@ -54,12 +68,14 @@ function main() {
  * @param {String} input - The input the user made
  */
 function getPonies(input) {
+  $('#results-label').show();
+  spinner.spin(target);
   if(input !== undefined) {
     apiString = buildApiString({tags: input.split(',')});
     makeRequest(apiString);
   } else {
     beginIndex = Math.floor(Math.random() * RANDOM_LIMIT);
-    apiString = buildApiString({order_by: 'random', id__gte: beginIndex});
+    apiString = buildApiString({order_by: '-hotness', id__gte: beginIndex});
     makeRequest(apiString);
   }
 }
@@ -107,6 +123,7 @@ function navigateToFace(id) {
  */
 function displayImages(data) {
   clearQuilt();
+  spinner.stop(target);
   if(data.objects.length <= 0) {
     $('#empty-text').show();
   } else {
@@ -114,8 +131,34 @@ function displayImages(data) {
     for(var i = 0; i < data.objects.length; i++) {
       face = data.objects[i];
 
+      src = HOST_BASE;
+      if(!_(face.thumbnails).isEmpty()) {
+        console.log("Adding thumbnail")
+        if(_(face.thumbnails).has("webp")) {
+          src += face.thumbnails.webp;
+        } else if (_(face.thumbnails).has("jpg")) {
+          src += face.thumbnails.jpg;
+        } else if(_(face.thumbnails).has("gif")) {
+          src += face.thumbnails.gif
+        } else {
+          src += face.thumbnails[_(face.thumbnails).keys()[0]];
+        }
+      } else if (!_(face.resizes).isEmpty()) {
+        console.log("Adding resize")
+        if(_(face.resizes).has("small")) {
+          src += face.resizes.small;
+        } else if(_(face.resizes).has("medium")) {
+          src += face.resizes.medium;
+        } else {
+          src += face.resizes[_(face.resizes).keys()[0]];
+        }
+      } else {
+        console.log("Adding image " + face.image);
+        src += face.image;
+      }
+
       element = $('<img class="item"/>')
-        .attr('src', HOST_BASE + face.image);
+        .attr('src', src);
 
       relRatio = face.width / face.height;
       if(relRatio >= 1.3) {

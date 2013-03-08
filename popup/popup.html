@@ -13,17 +13,18 @@
   <script type="text/javascript" src="/js/jquery/jquery.rest.js"></script>
   <script type="text/javascript" src="/js/jquery/jquery.mosaicflow.min.js"></script>
   <script type="text/javascript" src="/js/bootstrap/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/underscore.js"></script>
+  <script type="text/javascript" src="/js/spin.js"></script>
   <script type="text/javascript" src="/js/background.js"></script>
   <script type="text/javascript" src="/popup/popup.js"></script>
 </head>
-<body>
   <div class="container" id="root">
     <div class="row-fluid">
       <div class="span10">
         <input id="search-bar" type="text" class="input-block-level" placeholder="Search MLFW">
       </div>
     </div>
-    <h5>Results</h5>
+    <h5 id="results-label">Results</h5>
     <p class="muted" id="empty-text"><small id="empty-text-inner">No results</small></p>
     <div id="quilt" class="clearfix">
     </div>
