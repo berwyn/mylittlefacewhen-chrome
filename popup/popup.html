@@ -19,9 +19,18 @@
   <script type="text/javascript" src="/popup/popup.js"></script>
 </head>
   <div class="container" id="root">
-    <div class="row-fluid">
+    <div class="row">
       <div class="span10">
-        <input id="search-bar" type="text" class="input-block-level" placeholder="Search MLFW">
+        <form class="form-inline" id="search-form">
+          <fieldset>
+            <div class="control-group">
+              <div class="input-append">
+                <input id="search-bar" type="text" class="input-block-level" placeholder="Search MLFW">
+                <button class="btn" type="button">Search</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
       </div>
     </div>
     <h5 id="results-label">Results</h5>

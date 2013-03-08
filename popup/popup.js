@@ -35,7 +35,8 @@ $(function() {
  */
 function main() {
 
-  
+  // Size the input box
+  sizeSearchInput();
 
   // Inialize the mosaic quilt
   $('#quilt').mosaicflow({
@@ -48,17 +49,15 @@ function main() {
   $('#empty-text').hide();
   
   // Setup the search bar
-  $('#search-bar').keyup(function(event) {
+  $('#search-form').submit(function(event) {
     input = $('#search-bar').val();
-    code = event.keyCode || event.which;
-    if(code == 13) {
-      if(input.length > 0) {
-        clearQuilt();
-        getPonies(input);
-      } else {
-        getPonies();
-      }
+    if(input.length > 0) {
+      clearQuilt();
+      getPonies(input);
+    } else {
+      getPonies();
     }
+    return false;
   });
 }
 
@@ -170,4 +169,9 @@ function displayImages(data) {
       $('#quilt').append(element);
     }
   }
+}
+
+function sizeSearchInput() {
+  var formWidth = $('#search-form').width();
+  $('#search-bar').width((formWidth - 92)+"px");
 }
