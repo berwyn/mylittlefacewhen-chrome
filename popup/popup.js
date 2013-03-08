@@ -132,7 +132,6 @@ function displayImages(data) {
 
       src = HOST_BASE;
       if(!_(face.thumbnails).isEmpty()) {
-        console.log("Adding thumbnail")
         if(_(face.thumbnails).has("webp")) {
           src += face.thumbnails.webp;
         } else if (_(face.thumbnails).has("jpg")) {
@@ -143,7 +142,6 @@ function displayImages(data) {
           src += face.thumbnails[_(face.thumbnails).keys()[0]];
         }
       } else if (!_(face.resizes).isEmpty()) {
-        console.log("Adding resize")
         if(_(face.resizes).has("small")) {
           src += face.resizes.small;
         } else if(_(face.resizes).has("medium")) {
@@ -152,7 +150,6 @@ function displayImages(data) {
           src += face.resizes[_(face.resizes).keys()[0]];
         }
       } else {
-        console.log("Adding image " + face.image);
         src += face.image;
       }
 

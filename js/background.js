@@ -41,7 +41,6 @@ function buildApiString(object) {
         console.log(object[key][index]);
         apiString += (encodeURIComponent(object[key][index]) + ',');
       }
-      apiString = apiString.substring(0, apiString.length - 1);
     } else {
       apiString += key + '=' + object[key] + '&';
     }
