@@ -156,6 +156,12 @@ function displayImages(data) {
       element = $('<img class="item"/>')
         .attr('src', src);
 
+      element.mouseenter(function() {
+        // TODO create hover element
+      }).mouseleave(function() {
+        // TODO hide the hover element
+      });
+
       relRatio = face.width / face.height;
       if(relRatio >= 1.3) {
         element.addClass('item-wide');
