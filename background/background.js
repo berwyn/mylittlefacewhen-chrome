@@ -67,3 +67,16 @@ function navigate(url) {
     }
   });
 }
+
+/**
+ * Given a string, copies it to the system clipboard
+ *
+ * @param {String} text
+ */
+function copyToClipboard(text) {
+  var sandbox = document.getElementById('sandbox');
+  sandbox.value = text;
+  sandbox.select();
+  document.execCommand('copy');
+  sandbox.value = '';
+}

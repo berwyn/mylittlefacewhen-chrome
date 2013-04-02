@@ -3,6 +3,7 @@ var HOST_BASE = "http://mylittlefacewhen.com";
 var API_BASE = "/api/v3";
 var API_URL = HOST_BASE + API_BASE;
 var RANDOM_LIMIT = 580;
+var background_page;
 
 var image_template = 
 '<div class="mosaic-block item">\
@@ -47,6 +48,12 @@ function main() {
 
   // Size the input box
   sizeSearchInput();
+
+  // Get the background page
+  chrome.runtime.getBackgroundPage(function(backgroundPage) {
+    background_page = backgroundPage;
+    console.log(backgroundPage);
+  });
 
   // Hide inital elements
   $('#results-label').hide();
