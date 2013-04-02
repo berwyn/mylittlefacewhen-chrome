@@ -80,11 +80,11 @@ function main() {
 function getPonies(input) {
   $('#results-label').show();
   if(input !== undefined) {
-    apiString = buildApiString({tags: input.split(',')});
+    apiString = background_page.buildApiString({tags: input.split(',')});
     makeRequest(apiString);
   } else {
     beginIndex = Math.floor(Math.random() * RANDOM_LIMIT);
-    apiString = buildApiString({order_by: '-hotness', id__gte: beginIndex});
+    apiString = background_page.buildApiString({order_by: '-hotness', id__gte: beginIndex});
     makeRequest(apiString);
   }
 }
