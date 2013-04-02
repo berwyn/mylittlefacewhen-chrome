@@ -7,14 +7,16 @@ var RANDOM_LIMIT = 580;
 var image_template = 
 '<div class="mosaic-block item">\
   <div class="mosaic-overlay">\
-    <div class="image-div" style="background-image: url({{{image}}});"/>\
+    <div class="image-div" style="background-image: url({{{image}}})"/>\
   </div>\
-  <a href="{{{url}}}" target="_blank" class="mosaic-backdrop">\
+  <div class="mosaic-backdrop">\
+    <a href="{{{url}}}" target="_blank">\
+      <h5>{{{name}}}</h5>\
+    </a>\
     <div class="details">\
-      <p>{{{name}}}</p>\
       <!-- Detail content goes here -->\
     </div>\
-  </a>\
+  </div>\
 </div>';
 var compiled_image_template = Mustache.compile(image_template);
 
