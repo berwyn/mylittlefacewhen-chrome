@@ -5,10 +5,10 @@ var API_URL = HOST_BASE + API_BASE;
 var RANDOM_LIMIT = 580;
 
 var image_template = 
-'<div class="item>\
-  <a href="{{{url}}}" target="_blank" class="mosaic-overlay">\
-    <img src="{{{image}}}" alt={{{alt}}} />\
-  </a>\
+'<div class="mosaic-block item">\
+  <div class="mosaic-overlay">\
+    <div class="image-div" style="background-image: url({{{image}}});"/>\
+  </div>\
   <a href="{{{url}}}" target="_blank" class="mosaic-backdrop">\
     <div class="details">\
       <p>{{{name}}}</p>\
@@ -16,7 +16,6 @@ var image_template =
     </div>\
   </a>\
 </div>';
-
 var compiled_image_template = Mustache.compile(image_template);
 
 
@@ -147,7 +146,7 @@ function renderFace(face) {
   element_inner = compiled_image_template(data);
   
   element = $('<div/>').html(element_inner).contents();
-  element.mosaic({
+  $(element).mosaic({
     animation : 'slide',  //fade or slide
     anchor_y  : 'top',    //Vertical anchor position
     hover_y   : '80px'    //Vertical position on hover

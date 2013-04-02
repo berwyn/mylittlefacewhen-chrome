@@ -5,28 +5,10 @@
   padding-top: 10px;
 }
 
-.item {
-  max-width: 140px;
-  max-height: 140px;
-  margin: 5px;
-}
-
-.item-tall {
-  max-height: 390px;
-}
-
-.item-wide {
-  max-width: 390px;
-}
-
-.mosaicflow__column {
-  float:left;
-}
-
-.mosaicflow__item img {
-  display:block;
-  width:100%;
-  height:auto;
+.image-div {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
 }
 
 .wf-loading p,
