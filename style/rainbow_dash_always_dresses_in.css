@@ -28,3 +28,18 @@
   width:100%;
   height:auto;
 }
+
+.wf-loading p,
+.wf-inactive p,
+.wf-loading h1,
+.wf-inactive h1 {
+  font-family: sans-serif
+}
+
+.wf-active p {
+  font-family: 'Roboto Condensed', sans-serif
+}
+
+.wf-active h1 {
+  font-family: 'Roboto', sans-serif;
+}

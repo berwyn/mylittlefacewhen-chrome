@@ -38,7 +38,7 @@ function buildApiString(object) {
     if(key === 'tags' ) {
       apiString += "tags__all=";
       for(var index in object[key]) {
-        console.log(object[key][index]);
+        console.log('[MLFW DEBUG] ' + object[key][index]);
         apiString += (encodeURIComponent(object[key][index]) + ',');
       }
     } else {

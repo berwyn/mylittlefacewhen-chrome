@@ -1,32 +1,29 @@
 // Some constants
-var HOST_BASE = "http://mylittlefacewhen.com/";
-var API_BASE = "api/v3/";
+var HOST_BASE = "http://mylittlefacewhen.com";
+var API_BASE = "/api/v3";
 var API_URL = HOST_BASE + API_BASE;
 var RANDOM_LIMIT = 580;
-var spinner;
-var target;
+
+var image_template = 
+'<div class="item>\
+  <a href="{{{url}}}" target="_blank" class="mosaic-overlay">\
+    <img src="{{{image}}}" alt={{{alt}}} />\
+  </a>\
+  <a href="{{{url}}}" target="_blank" class="mosaic-backdrop">\
+    <div class="details">\
+      <p>{{{name}}}</p>\
+      <!-- Detail content goes here -->\
+    </div>\
+  </a>\
+</div>';
+
+var compiled_image_template = Mustache.compile(image_template);
 
 
 /**
  * Bootstrap the browser action when the DOM is ready
  */
 $(function() {  
-  var opts = {
-    lines: 13,
-    length: 0,
-    width: 2,
-    radius: 5,
-    corners: 0,
-    rotate: 0,
-    trail: 60,
-    speed: 1.0,
-    hwaccel: true,
-    className: 'spinner',
-    top: 'auto',
-    left: 'auto'
-  };
-  spinner = new Spinner(opts);
-  target = $('#results-label');
   main();
 });
 
@@ -34,15 +31,21 @@ $(function() {
  * Base function to bootstrap the browser action
  */
 function main() {
+  // Load webfonts
+  WebFontConfig = {
+    google: { families: [ 'Roboto', 'Roboto Condensed' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
 
   // Size the input box
   sizeSearchInput();
-
-  // Inialize the mosaic quilt
-  $('#quilt').mosaicflow({
-    itemSelector: '.item',
-    minItemWidth: 150
-  });
 
   // Hide inital elements
   $('#results-label').hide();
@@ -68,7 +71,6 @@ function main() {
  */
 function getPonies(input) {
   $('#results-label').show();
-  spinner.spin(target);
   if(input !== undefined) {
     apiString = buildApiString({tags: input.split(',')});
     makeRequest(apiString);
@@ -86,14 +88,13 @@ function getPonies(input) {
  * @param {String} data - The URL parameters to add to the request
  */
 function makeRequest(data) {
-  console.log('Making request with data: ' + data);
   $.ajax({
     contentType: 'application/json',
     data: data,
     success: displayImages,
     processData: false,
     type: 'GET',
-    url: API_URL + 'face/'
+    url: API_URL + '/face/'
   });
 }
 
@@ -122,56 +123,68 @@ function navigateToFace(id) {
  */
 function displayImages(data) {
   clearQuilt();
-  spinner.stop(target);
-  if(data.objects.length <= 0) {
+  num_objects = _(data.objects).size();
+  if(num_objects <= 0) {
     $('#empty-text').show();
   } else {
     $('#empty-text').hide();
-    for(var i = 0; i < data.objects.length; i++) {
-      face = data.objects[i];
-
-      src = HOST_BASE;
-      if(!_(face.thumbnails).isEmpty()) {
-        if(_(face.thumbnails).has("webp")) {
-          src += face.thumbnails.webp;
-        } else if (_(face.thumbnails).has("jpg")) {
-          src += face.thumbnails.jpg;
-        } else if(_(face.thumbnails).has("gif")) {
-          src += face.thumbnails.gif
-        } else {
-          src += face.thumbnails[_(face.thumbnails).keys()[0]];
-        }
-      } else if (!_(face.resizes).isEmpty()) {
-        if(_(face.resizes).has("small")) {
-          src += face.resizes.small;
-        } else if(_(face.resizes).has("medium")) {
-          src += face.resizes.medium;
-        } else {
-          src += face.resizes[_(face.resizes).keys()[0]];
-        }
-      } else {
-        src += face.image;
-      }
-
-      element = $('<img class="item"/>')
-        .attr('src', src);
-
-      element.mouseenter(function() {
-        // TODO create hover element
-      }).mouseleave(function() {
-        // TODO hide the hover element
-      });
-
-      relRatio = face.width / face.height;
-      if(relRatio >= 1.3) {
-        element.addClass('item-wide');
-      } else if (relRatio <= .7) {
-        element.addClass('item-tall');
-      }
-
-      $('#quilt').append(element);
-    }
+    _.each(data.objects, renderFace);
   }
+}
+
+/**
+ * Take a given face object and render it in the popup
+ *
+ * @param face
+ */
+function renderFace(face) {
+  data = {
+    url: HOST_BASE + '/face/' + face.id,
+    name: face.title,
+    alt: face.description,
+    image: determineImageSource(face)
+  };
+  element_inner = compiled_image_template(data);
+  
+  element = $('<div/>').html(element_inner).contents();
+  element.mosaic({
+    animation : 'slide',  //fade or slide
+    anchor_y  : 'top',    //Vertical anchor position
+    hover_y   : '80px'    //Vertical position on hover
+  });
+  $('#quilt').append(element);
+}
+
+/**
+ * Decide which image url to use, based on which formats
+ * are availible as well as a series of preferences
+ *
+ * @param face
+ */
+function determineImageSource(face) {
+  src = HOST_BASE;
+  if(!_(face.thumbnails).isEmpty()) {
+    if(_(face.thumbnails).has("webp")) {
+      src += face.thumbnails.webp;
+    } else if (_(face.thumbnails).has("jpg")) {
+      src += face.thumbnails.jpg;
+    } else if(_(face.thumbnails).has("gif")) {
+      src += face.thumbnails.gif
+    } else {
+      src += face.thumbnails[_(face.thumbnails).keys()[0]];
+    }
+  } else if (!_(face.resizes).isEmpty()) {
+    if(_(face.resizes).has("small")) {
+      src += face.resizes.small;
+    } else if(_(face.resizes).has("medium")) {
+      src += face.resizes.medium;
+    } else {
+      src += face.resizes[_(face.resizes).keys()[0]];
+    }
+  } else {
+    src += face.image;
+  }
+  return src;
 }
 
 function sizeSearchInput() {
