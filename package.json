@@ -1,0 +1,10 @@
+{
+  "name" : "mlfw-chrome",
+  "description" : "Search the popular image reaction database",
+  "version" : "0.2.0",
+  "author" : "Berwyn Codeweaver <berwyn.codeweaver@gmail.com>",
+  "dependencies" : {
+    "flour" : "0.5.x",
+    "haml-coffee" : "1.11.x"
+  }
+}
