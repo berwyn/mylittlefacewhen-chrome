@@ -10,15 +10,15 @@ task 'build:coffee', ->
   compile 'coffee/popup.coffee', 'extension/js/popup.js'
 
 task 'build:less', ->
-  compile 'less/rainbow_dash', 'extension/style/rainbow_dash_always_dresses_in.css'
+  compile 'less/rainbow_dash.less', 'extension/style/rainbow_dash_always_dresses_in.css'
 
 task 'build:haml', ->
   compile 'haml/background.haml', 'extension/background.html'
   compile 'haml/popup.haml', 'extension/popup.html'
 
 task 'build:plugins', ->
-   bundle [], 'extension/js/plugins.js'
-  bundle [], 'extension/style/plugins.css'
+  # bundle [], 'extension/js/plugins.js'
+  # bundle [], 'extension/style/plugins.css'
 
 task 'build', ->
   invoke 'build:coffee'
