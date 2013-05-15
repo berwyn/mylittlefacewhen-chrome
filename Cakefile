@@ -3,9 +3,12 @@ fs      = require 'fs'
 {spawn} = require 'child_process'
 
 flour.compilers['haml'] = (file, cb) ->
-  haml = require 'haml-coffee'
+  haml = require 'haml'
   file.read (code) ->
-    cb haml.compile code
+    compiled = haml.render code
+    cb compiled
+
+flour.compilers.coffee.bare = true
 
 task 'build:coffee', ->
   compile 'coffee/background.coffee', 'extension/js/background.js'
