@@ -126,19 +126,18 @@
 #     src
 # }
 
-$(document).ready ->
-  app = angular.module 'MLFW', []
-  app.config ['$httpProvider', ($httpProvider) ->
-    $httpProvider.defaults.useXDomain = true
-    delete $httpProvider.defaults.headers.common['X-Requested-With']
-  ]
-  app.controller 'FaceController', ($scope, $http) ->
+app = angular.module 'MLFW', []
+app.config ['$httpProvider', ($httpProvider) ->
+  $httpProvider.defaults.useXDomain = true
+  delete $httpProvider.defaults.headers.common['X-Requested-With']
+]
+app.controller 'FaceController', ($scope, $http) ->
 
-    $scope.getFaces = () ->
-      tags = $scope.query
-      get = $http.get 'http://mylittlefacewhen.com/api/v3/face', {params: {tags__any: tags}}
-      get.success = (data, status, headers, config) ->
-        console.log data
-        $scope.faces = data.objects
-      get.error = (data, status, headers, config) ->
-        console.log 'Failed:', status
+  $scope.getFaces = () ->
+    tags = $scope.query
+    get = $http.get 'http://mylittlefacewhen.com/api/v3/face', {params: {tags__any: tags}}
+    get.success = (data, status, headers, config) ->
+      console.log data
+      $scope.faces = data.objects
+    get.error = (data, status, headers, config) ->
+      console.log 'Failed:', status

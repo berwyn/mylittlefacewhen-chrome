@@ -25,8 +25,8 @@ task 'build:handlebars', ->
 
 task 'build:plugins', ->
   bundle [
+    'lib/jquery/jquery-2.0.0.min.js',
     'lib/bootstrap/js/bootstrap.min.js',
-    'lib/jquery/-2.0.0.min.js',
     'lib/angular-1.0.6.js',
     'lib/webfont-1.4.2.js'
   ], 'extension/js/plugins.js'
