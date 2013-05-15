@@ -1,12 +1,12 @@
 flour   = require 'flour'
 fs      = require 'fs'
 {spawn} = require 'child_process'
+{exec}  = require 'child_process'
 
 flour.compilers['haml'] = (file, cb) ->
-  haml = require 'haml'
-  file.read (code) ->
-    compiled = haml.render code
-    cb compiled
+  exec "haml #{file}", (err, stdout, stderr) ->
+    throw err if err
+    cb stdout
 
 flour.compilers.coffee.bare = true
 
@@ -27,7 +27,7 @@ task 'build:plugins', ->
   bundle [
     'lib/bootstrap/js/bootstrap.min.js',
     'lib/jquery/-2.0.0.min.js',
-    'lib/handlebars-1.0.0-rc4.js',
+    'lib/angular-1.0.6.js',
     'lib/webfont-1.4.2.js'
   ], 'extension/js/plugins.js'
   bundle [
