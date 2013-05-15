@@ -18,7 +18,7 @@ app.controller 'MlfwController', ($scope, $http) ->
     ).success((json, status, headers, config) ->
       console.log json
       $scope.faces = json.objects
-      $scope.noResults = json.objects.length >= 1
+      $scope.noResults = json.objects.length == 0
     ).error (data, status, headers, config) ->
       err = "Failed " + status + " " + headers
       console.log err

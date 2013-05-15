@@ -22,7 +22,7 @@
     .row-fluid
       .span10.offset1
         %h5#results-label Results
-        %p#empty-text.muted{'ng-hide' => 'noResults'}
+        %p#empty-text.muted{'ng-show' => 'noResults'}
           %small#empty-text-inner No results
     .image-container{'ng-repeat' => 'face in faces'}
       .row-fluid
