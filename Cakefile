@@ -1,4 +1,6 @@
-flour = require 'flour'
+flour   = require 'flour'
+fs      = require 'fs'
+{spawn} = require 'child_process'
 
 flour.compilers['haml'] = (file, cb) ->
   haml = require 'haml-coffee'
@@ -17,14 +19,29 @@ task 'build:haml', ->
   compile 'haml/popup.haml', 'extension/popup.html'
 
 task 'build:plugins', ->
-  # bundle [], 'extension/js/plugins.js'
-  # bundle [], 'extension/style/plugins.css'
+  bundle [
+    'lib/bootstrap/js/bootstrap.min.js',
+    'lib/jquery/-2.0.0.min.js',
+    'lib/jquery/jquery.mustache.js'
+  ], 'extension/js/plugins.js'
+  bundle [
+    'lib/bootstrap/css/bootstrap.min.css',
+    'lib/bootstrap/css/bootstrap-responsive.min.css'
+  ], 'extension/style/plugins.css'
+
+task 'copy:images', ->
+  cp = spawn 'cp', ['-r','lib/bootstrap/img', 'extension/img']
+  cp.stderr.on 'data', (data) ->
+    process.stderr.write data.toString()
+  cp.stdout.on 'data', (data) ->
+    console.log data.toString()
 
 task 'build', ->
   invoke 'build:coffee'
   invoke 'build:less'
   invoke 'build:plugins'
   invoke 'build:haml'
+  invoke 'copy:images'
 
 task 'watch', ->
   invoke 'build:coffee'
