@@ -25,7 +25,7 @@
 
   "background": {
     "persistent": false,
-    "page": "html/background.html"
+    "page": "background.html"
   },
 
   // Browser Action with search
@@ -35,6 +35,6 @@
       "38": "icon.png"
     },
     "default_title": "My Little Face When",
-    "default_popup": "html/popup.html"
+    "default_popup": "popup.html"
   }
 }
