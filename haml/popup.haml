@@ -1,27 +1,29 @@
 !!!
-%html{lang: "en"}
+%html{lang: 'en', 'ng-app' => 'MLFW'}
   %head
-    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+    %meta{content: 'width=device-width, initial-scale=1.0', name: 'viewport'}/
     / 20% cooler in ten seconds flat
-    %link{href: "/style/plugins.css", rel: "stylesheet"}/
-    %link{href: "/style/rainbow_dash_always_dresses_in.css", rel: "stylesheet"}/
+    %link{href: '/style/plugins.css', rel: 'stylesheet'}/
+    %link{href: '/style/rainbow_dash_always_dresses_in.css', rel: 'stylesheet'}/
     / JavaScripts
-    %script{src: "/js/plugins.js", type: "text/javascript"}
-    %script{src: "/js/popup.js", type: "text/javascript"}
-  %form{style: "display: none;"}
-    %input#sandbox{type: "text"}/
-  #root.container
+    %script{src: '/js/plugins.js', type: 'text/javascript'}
+    %script{src: '/js/popup.js', type: 'text/javascript'}
+  %form{style: 'display: none;'}
+    %input#sandbox{type: 'text'}/
+  #root.container{'ng-controller' => 'MlfwController'}
     .row
       .span10
         %form#search-form.form-inline
           %fieldset
             .control-group
               .input-append
-                %input#search-bar.input-block-level{placeholder: "Search MLFW", type: "text"}/
-                %button.btn{type: "submit"} Search
+                %input#search-bar.input-block-level{placeholder: 'Search MLFW', type: 'text', 'ng-model' => 'query'}/
+                %button.btn{type: 'submit', 'ng-click' => 'getFaces()'} Search
     .row-fluid
       .span10.offset1
         %h5#results-label Results
         %p#empty-text.muted
           %small#empty-text-inner No results
-    #quilt.row
+    .image-container{'ng-repeat' => 'face in faces'}
+      .row-fluid
+        %img{'ng-src' => 'http://mylittlefacewhen.com/{{face.image}}'}
