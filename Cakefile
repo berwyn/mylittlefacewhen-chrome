@@ -18,6 +18,8 @@ task 'build:haml', ->
   compile 'haml/background.haml', 'extension/background.html'
   compile 'haml/popup.haml', 'extension/popup.html'
 
+task 'build:handlebars', ->
+
 task 'build:plugins', ->
   bundle [
     'lib/bootstrap/js/bootstrap.min.js',
@@ -40,15 +42,13 @@ task 'copy:images', ->
 task 'build', ->
   invoke 'build:coffee'
   invoke 'build:less'
-  invoke 'build:plugins'
   invoke 'build:haml'
+  invoke 'build:handlebars'
+  invoke 'build:plugins'
   invoke 'copy:images'
 
 task 'watch', ->
-  invoke 'build:coffee'
-  invoke 'build:less'
-  invoke 'build:plugins'
-  invoke 'build:haml'
+  invoke 'build'
 
   watch 'less/*.less', -> invoke 'build:less'
   watch 'coffee/*.coffee', -> invoke 'build:coffee'
