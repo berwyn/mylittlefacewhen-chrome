@@ -1,8 +1,8 @@
 window.mlfw.popup = {
-  backgroundPage = {}
-  randLimit = 500
-  imageTemplate =
-    '<div class="mosaic-block item">\
+  backgroundPage: {}
+  randLimit: 500
+  imageTemplate: """
+    <div class="mosaic-block item">\
       <div class="mosaic-overlay">\
         <div class="image-div" style="background-image: url({{{image}}})"/>\
       </div>\
@@ -14,7 +14,8 @@ window.mlfw.popup = {
           <!-- Detail content goes here -->\
         </div>\
       </div>\
-    </div>'
+    </div>
+  """
   compiled_image_template: Mustache.compile image_template
 
   main: ->
@@ -47,7 +48,7 @@ window.mlfw.popup = {
     wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js'
     wf.type = 'text/javascript'
     wf.async = 'true'
-    var s = document.getElementsByTagName('script')[0]
+    s = document.getElementsByTagName('script')[0]
     s.parentNode.insertBefore wf, s
 
   sizeSearchInput: ->

@@ -2,7 +2,7 @@ window.mlfw = {
 
   HOST_BASE: 'http://mylittlefacewhen.com'
   API_BASE: '/api/v3'
-  SEARCH_BASE = '/search/?'
+  SEARCH_BASE: '/search/?'
   API_URL: HOST_BASE + API_BASE
   SEARCH_URL: HOST_BASE + SEARCH_BASE
 
