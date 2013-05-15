@@ -22,7 +22,8 @@ task 'build:plugins', ->
   bundle [
     'lib/bootstrap/js/bootstrap.min.js',
     'lib/jquery/-2.0.0.min.js',
-    'lib/jquery/jquery.mustache.js'
+    'lib/jquery/jquery.mustache.js',
+    'lib/webfont-1.4.2.js'
   ], 'extension/js/plugins.js'
   bundle [
     'lib/bootstrap/css/bootstrap.min.css',
