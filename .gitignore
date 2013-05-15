@@ -1,2 +1,7 @@
-# Compiled JS
-out/
+# Compiled Assets
+extension/js/
+extension/style/
+extension/*.html
+
+# Node
+node_modules
