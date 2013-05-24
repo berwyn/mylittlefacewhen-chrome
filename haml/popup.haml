@@ -25,5 +25,7 @@
         %p#empty-text.muted{'ng-show' => 'noResults'}
           %small#empty-text-inner No results
     .image-container{'ng-repeat' => 'face in faces'}
-      .row-fluid
-        %img{'ng-src' => 'http://mylittlefacewhen.com/{{face.image}}'}
+      .card
+        .title
+          %h2 {{face.title}}
+        .result{style: 'background: url(http://mylittlefacewhen.com/{{face.image}});'}

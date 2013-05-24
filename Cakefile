@@ -27,7 +27,8 @@ task 'build:plugins', ->
   bundle [
     'lib/jquery/jquery-2.0.0.min.js',
     'lib/bootstrap/js/bootstrap.min.js',
-    'lib/angular-1.0.6.js'
+    'lib/angular-1.0.6.js',
+    'lib/imgLiquid.js'
   ], 'extension/js/plugins.js'
   bundle [
     'lib/bootstrap/css/bootstrap.min.css',

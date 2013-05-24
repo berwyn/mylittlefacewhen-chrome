@@ -1,35 +1,34 @@
+body, html {
+  background-color: rgb(241,241,241)
+}
+
 #root {
-  width: 420px;
+  min-width: 400px;
   min-height: 30px;
   max-height: 600px;
   padding-top: 10px;
 }
 
-.image-div {
-  height: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-}
+.card {
+  width: 300px;
+  height: 300px;
+  background-color: #FFF;
+  padding: 5px;
+  margin: 5px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 
-.mosaic-backdrop > a {
-  text-align: center;
-}
-
-.wf-loading,
-.wf-inactive {
-  p,
-  h1 {
-    font-family: sans-serif;
-  }
-}
-
-.wf-active {
-  p {
-    font-family: 'Roboto Condensed', sans-serif;
+  .title {
+    height: 30%;
+    overflow: hidden;
+    margin-bottom: 5px;
   }
 
-  h1 {
-    font-family: 'Roboto', sans-serif;
+  .result {
+    width: 100%;
+    min-height: 66%;
+    height: auto;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
   }
+
 }
