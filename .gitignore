@@ -1,8 +1,6 @@
 # Compiled Assets
-extension/js/
-extension/style/
-extension/*.html
-extension/img/
+extension/
+*.zip
 
 # Node
 node_modules
