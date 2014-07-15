@@ -15,6 +15,14 @@ module.exports = function(grunt) {
 				eqnull: true,
 				browser: true
 			}
+		},
+
+		less: {
+			extension: {			
+				files: {
+					'extension/rainbow_dash.css': 'extension/rainbow_dash.less'
+				}
+			}
 		}
 	});
 	require('load-grunt-tasks')(grunt);
