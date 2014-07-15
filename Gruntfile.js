@@ -23,7 +23,16 @@ module.exports = function(grunt) {
 					'extension/rainbow_dash.css': 'extension/rainbow_dash.less'
 				}
 			}
+		},
+
+		copy: {
+			extension: {
+				files: [
+					{expand: true, src: ['bower_components/**'], dest: 'extension/'}
+				]
+			}
 		}
 	});
+	grunt.task.registerTask('pkg', ['less', 'copy']);
 	require('load-grunt-tasks')(grunt);
 }

@@ -1,5 +1,6 @@
 # Compiled Assets
 *.css
+extension/bower_components
 
 # Node
 node_modules
