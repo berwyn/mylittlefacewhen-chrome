@@ -1,47 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="MLFW">
+<html lang="en" ng-app="MLFW" ng-csp>
 	<head>
-		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<meta content="width=device-width, initial-scale=1" name="viewport" />
 
 		<link rel="stylesheet" type="text/css" href="/bower_components/angular/angular-csp.css">
 		<link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="/rainbow_dash.css">
 
 		<script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
 		<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
 		<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+		<script type="text/javascript" src="/popup.js"></script>
 	</head>
 	<body>
 		<form style="display: none;">
 			<input type="text" id="sandbox" />
 		</form>
-		<div id="root" class="container" ng-controller="MlfwController">
+		<div class="container-fluid" ng-controller="MlfwController">
 			<div class="row">
-				<div class="col-md-10">
-					<form id="search-form" class="form-inline">
+				<div class="col-md-10 col-md-offset-1">
+					<div id="search-form" class="form-inline">
 						<fieldset>
-							<div class="control-group">
-								<div class="input-append">
-									<input type="text" id="search-bar" class="input-block-level" placeholder="Search MLFW" ng-model="query" />
-								</div>
-								<button class="btn" type="submit" ng-click="getFaces()">Search</button>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search MLFW" ng-model="query">
+								<span class="input-group-btn">
+									<button class="btn btn-primary" type="button" ng-click="getFaces()">Search</button>
+								</span>
 							</div>
 						</fieldset>
-					</form>
+					</div>
 				</div>
 			</div>
-			<div class="row-fluid">
+			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
 					<h5 id="results-label">Results</h5>
-					<p id="empty-text" class="muted" ng-show="noResults">
+					<p id="empty-text" class="muted" ng-show="!!faces.length">
 						<small id="empty-text-inner">No results</small>
 					</p>
 				</div>
 			</div>
 			<div class="image-container" ng-repeat="face in faces">
-				<div class="row-fluid">
+				<div class="row">
 					<img ng-src="http://mylittlefacewhen.com/{{face.image}}">
 				</div>
 			</div>
 		</div>
+		
 	</body>
 </html>
