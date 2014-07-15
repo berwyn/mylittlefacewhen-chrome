@@ -3,7 +3,7 @@ $(document).ready(function() {
 	$('#search-bar').width((formWidth - 92) + 'px');
 });
 
-app = angular.module('MLFW', []);
+app = angular.module('MLFW', ['akoenig.deckgrid']);
 
 app.config(['$httpProvider', function($httpProvider) {
 	$httpProvider.defaults.useXDomain = true;

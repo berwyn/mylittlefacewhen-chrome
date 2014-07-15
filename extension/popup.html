@@ -7,15 +7,18 @@
 		<link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="/rainbow_dash.css">
 
+		<!-- JS libraries -->
 		<script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
 		<script type="text/javascript" src="/bower_components/angular/angular.js"></script>
 		<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+		
+		<!-- Angular plugins -->
+		<script src="/bower_components/angular-deckgrid/angular-deckgrid.js"></script>
+
+		<!-- App -->
 		<script type="text/javascript" src="/popup.js"></script>
 	</head>
 	<body>
-		<form style="display: none;">
-			<input type="text" id="sandbox" />
-		</form>
 		<div class="container-fluid" ng-controller="MlfwController">
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
@@ -33,14 +36,14 @@
 			</div>
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<h5 id="results-label">Results</h5>
-					<p id="empty-text" class="muted" ng-show="!!faces.length">
+					<h5 id="results-label" ng-show="!!query.length">Results</h5>
+					<p id="empty-text" class="muted" ng-show="!!query.length && !faces.length">
 						<small id="empty-text-inner">No results</small>
 					</p>
 				</div>
 			</div>
-			<div class="image-container" ng-repeat="face in faces">
-				<div class="row">
+			<div class="image-grid">
+				<div class="face" ng-repeat="face in faces">
 					<img ng-src="http://mylittlefacewhen.com/{{face.image}}">
 				</div>
 			</div>

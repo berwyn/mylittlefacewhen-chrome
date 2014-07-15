@@ -3,33 +3,25 @@ body {
   min-height: 30px;
   max-height: 600px;
   padding-top: 10px;
+  background-color: #e8e8e8;
 }
 
-.image-div {
-  height: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
+.image-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
-.mosaic-backdrop > a {
-  text-align: center;
-}
+.face {
+  max-width: 45%;
+  width: auto;
+  height: auto;
+  background-color: white;
+  margin: 5px;
 
-.wf-loading,
-.wf-inactive {
-  p,
-  h1 {
-    font-family: sans-serif;
-  }
-}
-
-.wf-active {
-  p {
-    font-family: 'Roboto Condensed', sans-serif;
-  }
-
-  h1 {
-    font-family: 'Roboto', sans-serif;
+  img {
+    border-radius: 2px;
+    max-width: 100%;
   }
 }
