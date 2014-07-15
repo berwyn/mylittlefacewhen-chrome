@@ -5,7 +5,9 @@ module.exports = function(grunt) {
 
 		jshint: {
 			all: [
-				'js/*.js'
+				'*.js',
+				'!**/node_modules/**',
+				'!**/bower_components/**'
 			],
 			options: {
 				curly: true,
