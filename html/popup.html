@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MLFW">
+	<head>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<!-- TODO: Link CSS -->
+		<!-- TODO: Link JS -->
+	</head>
+	<body>
+		<form style="display: none;">
+			<input type="text" id="sandbox" />
+		</form>
+		<div id="root" class="container" ng-controller="MlfwController">
+			<div class="row">
+				<div class="col-md-10">
+					<form id="search-form" class="form-inline">
+						<fieldset>
+							<div class="control-group">
+								<div class="input-append">
+									<input type="text" id="search-bar" class="input-block-level" placeholder="Search MLFW" ng-model="query" />
+								</div>
+								<button class="btn" type="submit" ng-click="getFaces()">Search</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="col-md-10 col-md-offset-1">
+					<h5 id="results-label">Results</h5>
+					<p id="empty-text" class="muted" ng-show="noResults">
+						<small id="empty-text-inner">No results</small>
+					</p>
+				</div>
+			</div>
+			<div class="image-container" ng-repeat="face in faces">
+				<div class="row-fluid">
+					<img ng-src="http://mylittlefacewhen.com/{{face.image}}">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
