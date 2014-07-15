@@ -1,14 +1,16 @@
 {
-  "name" : "mlfw-chrome",
-  "description" : "Search the popular image reaction database",
-  "version" : "0.2.0",
-  "author" : "Berwyn Codeweaver <berwyn.codeweaver@gmail.com>",
-  "dependencies" : {
-    "coffee-script" : "1.6.x",
-    "haml" : "0.4.x",
-    "less" : "1.3.x",
-    "uglify-js" : "2.3.x",
-    "csso" : "1.3.x",
-    "flour" : "0.5.x"
+  "name": "mlfw-chrome",
+  "description": "Search the popular image reaction database",
+  "version": "0.2.0",
+  "author": "Berwyn Codeweaver <berwyn.codeweaver@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/berwyn/mylittlefacewhen-chrome"
+  },
+  "private": true,
+  "dependencies": {
+    "bower": "^1.3.8",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.10.0"
   }
 }
