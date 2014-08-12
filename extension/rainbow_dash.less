@@ -8,9 +8,8 @@ body {
 
 .image-grid {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  flex-flow: row wrap;
+  align-items: baseline;
 }
 
 .face {
@@ -19,9 +18,13 @@ body {
   height: auto;
   background-color: white;
   margin: 5px;
+  flex-grow: 1;
 
   img {
     border-radius: 2px;
     max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
   }
 }
