@@ -19,15 +19,15 @@
 		<script type="text/javascript" src="/popup.js"></script>
 	</head>
 	<body>
-		<div class="container-fluid" ng-controller="MlfwController">
+		<div class="container-fluid" ng-controller="MLFWCtrl as mlfw">
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
 					<div id="search-form" class="form-inline">
 						<fieldset>
 							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Search MLFW" ng-model="query">
+								<input type="text" class="form-control" placeholder="Search MLFW" ng-model="mlfw.query">
 								<span class="input-group-btn">
-									<button class="btn btn-primary" type="button" ng-click="getFaces()">Search</button>
+									<button class="btn btn-primary" type="button" ng-click="mlfw.getFaces()">Search</button>
 								</span>
 							</div>
 						</fieldset>
@@ -36,14 +36,14 @@
 			</div>
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
-					<h5 id="results-label" ng-show="!!query.length">Results</h5>
-					<p id="empty-text" class="muted" ng-show="!!query.length && !faces.length">
+					<h5 id="results-label" ng-show="!!mlfw.query.length">Results</h5>
+					<p id="empty-text" class="muted" ng-show="!!mlfw.query.length && !mlfw.faces.length">
 						<small id="empty-text-inner">No results</small>
 					</p>
 				</div>
 			</div>
 			<div class="image-grid">
-				<div class="face" ng-repeat="face in faces">
+				<div class="face" ng-repeat="face in mlfw.faces">
 					<img ng-src="http://mylittlefacewhen.com/{{face.image}}">
 				</div>
 			</div>
